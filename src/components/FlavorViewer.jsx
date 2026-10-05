@@ -77,9 +77,9 @@ export default function FlavorViewer({ index, onClose, onNav, draft, boxFull, on
           </ul>
           <div className="viewer-actions">
             <button className="btn" onClick={() => onAdd(f.id)} disabled={boxFull}>
-              {boxFull ? `Tu caja está completa` : inBox ? `Agregar otro (${inBox} en tu caja)` : 'Agregar a mi caja'}
+              {boxFull ? `Tu pedido está completo` : inBox ? `Agregar otro (${inBox} en tu pedido)` : 'Agregar a mi pedido'}
             </button>
-            <button className="btn btn-ghost" onClick={onOpenBox}><BoxIcon width="18" height="18" /> Ver mi caja</button>
+            <button className="btn btn-ghost" onClick={onOpenBox}><BoxIcon width="18" height="18" /> Ver mi pedido</button>
           </div>
         </div>
 

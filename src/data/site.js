@@ -15,13 +15,22 @@ export const SITE = {
 
 export const BOX_SIZE = 4
 
-// Caja de 4 alfajores: el precio depende del tamaño.
+// Dos formas de pedir: caja de 4 (precio por tamaño) o alfajores sueltos (precio por unidad, mínimo 2).
 export const SIZES = [
-  { id: 'mini', label: 'Mini', price: 15000, note: 'Tamaño pequeño, perfectos para probar' },
-  { id: 'grande', label: 'Grande', price: 25000, note: 'Tamaño grande, el clásico' },
+  { id: 'mini', label: 'Mini', price: 15000, unitPrice: 4000, note: 'Tamaño pequeño, perfectos para probar' },
+  { id: 'grande', label: 'Grande', price: 25000, unitPrice: 7000, note: 'Tamaño grande, el clásico' },
 ]
+export const DELIVERY_FEE = 7000 // domicilio en Yopal: un solo cargo por pedido
+export const MIN_LOOSE = 2 // mínimo de alfajores sueltos por pedido
+export const MAX_LOOSE = 24 // tope razonable; para más, escribir por WhatsApp
 export const DEFAULT_SIZE = 'grande'
 export const sizeOf = (id) => SIZES.find((s) => s.id === id) ?? SIZES.find((s) => s.id === DEFAULT_SIZE)
+
+// Cart item: { kind: 'box' | 'loose' (missing = 'box', older saved carts), size, flavors: { [flavorId]: qty } }
+export const unitsOf = (flavors) => Object.values(flavors).reduce((a, b) => a + b, 0)
+export const itemUnits = (item) => (item.kind === 'loose' ? unitsOf(item.flavors) : BOX_SIZE)
+export const itemPrice = (item) =>
+  item.kind === 'loose' ? unitsOf(item.flavors) * sizeOf(item.size).unitPrice : sizeOf(item.size).price
 
 // Photo files live in /public/img. Keyword file names + descriptive alt text + real dimensions.
 const photo = (file, alt, width = 1200, height = 1000) => ({ image: `/img/${file}`, alt, width, height })

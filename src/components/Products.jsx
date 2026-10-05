@@ -1,4 +1,4 @@
-import { BOX_SIZE, FLAVORS, SIZES, formatPrice } from '../data/site'
+import { BOX_SIZE, FLAVORS, MIN_LOOSE, SIZES, formatPrice } from '../data/site'
 import { ZoomIcon } from './Icons'
 import Reveal from './Reveal'
 
@@ -8,7 +8,7 @@ export default function Products({ draft, onPick, onView }) {
       <Reveal as="h2" className="h-deco">Conoce nuestros sabores</Reveal>
       <Reveal as="p" className="section-sub" delay={80}>
         Toca una foto para verla de cerca. Arma tu caja de {BOX_SIZE} mezclando sabores:{' '}
-        {SIZES.map((s) => `${s.label.toLowerCase()}s ${formatPrice(s.price)}`).join(' · ')}.
+        {SIZES.map((s) => `${s.label.toLowerCase()}s ${formatPrice(s.price)}`).join(' · ')}. También puedes pedirlos sueltos (mínimo {MIN_LOOSE}): {SIZES.map((s) => `${s.label.toLowerCase()} ${formatPrice(s.unitPrice)} c/u`).join(' · ')}.
       </Reveal>
       <div className="grid">
         {FLAVORS.map((f, i) => (
@@ -17,11 +17,11 @@ export default function Products({ draft, onPick, onView }) {
               <img src={f.image} alt={f.alt} loading="lazy" width={f.width} height={f.height} />
               <span className="card-peek"><ZoomIcon width="18" height="18" /> Ver de cerca</span>
               {f.isNew && <span className="badge">Nuevo sabor ✨</span>}
-              {draft[f.id] > 0 && <span className="badge in-box">En tu caja: {draft[f.id]}</span>}
+              {draft[f.id] > 0 && <span className="badge in-box">En tu pedido: {draft[f.id]}</span>}
             </button>
             <h3>{f.name}</h3>
             <p>{f.desc}</p>
-            <button className="btn btn-sm" onClick={() => onPick(f.id)}>Agregar a mi caja</button>
+            <button className="btn btn-sm" onClick={() => onPick(f.id)}>Agregar a mi pedido</button>
           </Reveal>
         ))}
       </div>

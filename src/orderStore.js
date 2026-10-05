@@ -38,3 +38,8 @@ export function getInitialOrder() {
   initial = { boxes, expired }
   return initial
 }
+
+// Test hook: forget the cached page-load snapshot so the next getInitialOrder() re-reads storage.
+export const resetInitialOrder = () => {
+  initial = undefined
+}

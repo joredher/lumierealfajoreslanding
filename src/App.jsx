@@ -3,7 +3,7 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import Products from './components/Products'
 import CartDrawer from './components/CartDrawer'
-import BoxBuilder, { FloatingButton, countOf } from './components/BoxBuilder'
+import BoxBuilder, { FloatingButton, countOf, limitOf } from './components/BoxBuilder'
 import FlavorViewer from './components/FlavorViewer'
 import ExpiredModal from './components/ExpiredModal'
 import ScrollFX from './components/ScrollFX'
@@ -12,7 +12,7 @@ import { About, Rolls, HowTo, Contact, Footer } from './components/Sections'
 import { useCart } from './useCart'
 import { useOrderExpiry } from './useOrderExpiry'
 import { clearOrderTs, getInitialOrder } from './orderStore'
-import { BOX_SIZE, DEFAULT_SIZE, FLAVORS } from './data/site'
+import { DEFAULT_SIZE, FLAVORS } from './data/site'
 
 export default function App() {
   const cart = useCart()
@@ -20,14 +20,22 @@ export default function App() {
   const [builderOpen, setBuilderOpen] = useState(false)
   const [viewing, setViewing] = useState(null) // flavour index or null
   const [draft, setDraft] = useState({})
+  const [mode, setModeState] = useState('box') // 'box' (4 alfajores) | 'loose' (single alfajores, min 2)
   const [size, setSize] = useState(DEFAULT_SIZE)
   // true when a saved order was left untouched for 15+ minutes (or the order just expired on screen)
   const [expired, setExpired] = useState(() => getInitialOrder().expired)
-  const boxFull = countOf(draft) >= BOX_SIZE
+  const atLimit = countOf(draft) >= limitOf(mode)
+
+  // switching to "caja" with more than 4 chosen would overflow the box, so start that selection over
+  const setMode = (m) => {
+    if (m === 'box' && countOf(draft) > limitOf('box')) setDraft({})
+    setModeState(m)
+  }
 
   const resetOrder = () => {
     cart.clear()
     setDraft({})
+    setModeState('box')
     setSize(DEFAULT_SIZE)
     setCartOpen(false)
     setBuilderOpen(false)
@@ -37,13 +45,13 @@ export default function App() {
   }
   useOrderExpiry(draft, cart.boxes, resetOrder)
 
-  const addToDraft = (id) => !boxFull && setDraft((d) => ({ ...d, [id]: (d[id] || 0) + 1 }))
+  const addToDraft = (id) => !atLimit && setDraft((d) => ({ ...d, [id]: (d[id] || 0) + 1 }))
   const pick = (id) => {
     addToDraft(id)
     setBuilderOpen(true)
   }
   const finishBox = () => {
-    cart.add(draft, size)
+    cart.add(draft, size, mode)
     setDraft({})
     setBuilderOpen(false)
     setCartOpen(true)
@@ -80,17 +88,27 @@ export default function App() {
       </main>
       <Footer />
       <WhatsAppFab />
-      <FloatingButton draft={draft} size={size} onClick={() => setBuilderOpen(true)} />
+      <FloatingButton draft={draft} mode={mode} size={size} onClick={() => setBuilderOpen(true)} />
       <FlavorViewer
         index={viewing}
         onClose={() => setViewing(null)}
         onNav={nav}
         draft={draft}
-        boxFull={boxFull}
+        boxFull={atLimit}
         onAdd={addToDraft}
         onOpenBox={() => { setViewing(null); setBuilderOpen(true) }}
       />
-      <BoxBuilder open={builderOpen} onClose={() => setBuilderOpen(false)} draft={draft} setDraft={setDraft} size={size} setSize={setSize} onDone={finishBox} />
+      <BoxBuilder
+        open={builderOpen}
+        onClose={() => setBuilderOpen(false)}
+        draft={draft}
+        setDraft={setDraft}
+        mode={mode}
+        setMode={setMode}
+        size={size}
+        setSize={setSize}
+        onDone={finishBox}
+      />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} cart={cart} onBuild={() => setBuilderOpen(true)} />
       <ExpiredModal
         open={expired}

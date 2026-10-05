@@ -24,3 +24,27 @@
 /* keep the footer text clear of the floating buttons */
 .footer { padding-bottom: 6rem; }
 @media (min-width: 761px) { .footer { padding-bottom: 5rem; } }
+
+/* contact buttons centered, wrapping evenly on any width */
+.contact .hero-cta { justify-content: center; }
+.contact .hero-cta .btn { text-align: center; }
+
+/* order type selector: caja de 4 / sueltos */
+.mode-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 0 1.25rem .85rem; padding: 4px !important; background: var(--cream-2); border: 2px solid var(--amber); border-radius: 999px; }
+.mode-pick label { position: relative; margin: 0 !important; padding: .55rem .5rem; border-radius: 999px; text-align: center; font-weight: 800; cursor: pointer; transition: background .2s, color .2s; }
+.mode-pick label.on { background: var(--orange); color: #fff; box-shadow: 0 3px 10px rgba(110, 31, 14, .25); }
+.mode-pick input { position: absolute; inset: 0; opacity: 0; width: 100%; padding: 0; margin: 0; border: 0; cursor: pointer; }
+.mode-pick label:has(input:focus-visible) { outline: 3px solid var(--teal); outline-offset: 2px; }
+.loose-total { margin: 0 0 .75rem; font-size: 1.05rem; }
+.tip { margin: 0 0 .6rem; padding: .5rem .75rem; font-size: .9rem; background: var(--cream-2); border: 2px dashed var(--amber); border-radius: 12px; }
+.link-btn { background: none; border: 0; padding: 0; font: inherit; font-weight: 800; color: var(--orange); text-decoration: underline; cursor: pointer; }
+
+/* cart totals */
+.totals { margin: .75rem 0; display: grid; gap: .3rem; }
+.totals div { display: flex; justify-content: space-between; }
+.totals dt, .totals dd { margin: 0; }
+.totals .total { margin-top: .2rem; padding-top: .45rem; border-top: 2px dashed var(--amber); font-size: 1.2rem; }
+
+/* the scroll-rotating hero sun must never widen the page (it made phones scroll sideways) */
+.hero { overflow-x: clip; }
+html, body { overflow-x: clip; max-width: 100%; }

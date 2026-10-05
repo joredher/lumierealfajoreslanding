@@ -1,4 +1,4 @@
-import { IMAGES, ROLLS, SIZES, SITE, formatPrice } from '../data/site'
+import { IMAGES, MIN_LOOSE, ROLLS, SIZES, SITE, formatPrice } from '../data/site'
 import Reveal from './Reveal'
 import Sun from './Sun'
 
@@ -44,9 +44,9 @@ export function About() {
 
 export function HowTo() {
   const steps = [
-    ['1', 'Arma tu caja', `Elige el tamaño (${SIZES.map((s) => `${s.label.toLowerCase()} ${formatPrice(s.price)}`).join(' o ')}) y 4 sabores, los que quieras.`],
+    ['1', 'Elige tu pedido', `Arma una caja de 4 (${SIZES.map((s) => `${s.label.toLowerCase()} ${formatPrice(s.price)}`).join(' o ')}) o pide alfajores sueltos, mínimo ${MIN_LOOSE}.`],
     ['2', 'Confirma', 'Déjanos tu nombre y datos de entrega; se abre WhatsApp con tu pedido listo.'],
-    ['3', 'Disfruta', 'Coordinamos el pago y la entrega en Yopal, y recibes todo fresco.'],
+    ['3', 'Disfruta', 'Coordinamos el pago y la entrega en Yopal (el domicilio tiene un costo adicional) y recibes todo fresco.'],
   ]
   return (
     <section id="como-pedir" className="section">

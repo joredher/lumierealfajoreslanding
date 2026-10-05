@@ -41,7 +41,7 @@ export default function Header({ count, onCart }) {
         key={count}
         className={`cart-btn ${count ? 'has-items' : ''}`}
         onClick={onCart}
-        aria-label={`Abrir mi pedido, ${count} ${count === 1 ? 'caja' : 'cajas'}`}
+        aria-label={`Abrir mi pedido, ${count} ${count === 1 ? 'artículo' : 'artículos'}`}
       >
         <BagIcon />
         {count > 0 && <span className="cart-badge">{count}</span>}

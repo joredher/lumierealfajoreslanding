@@ -59,5 +59,7 @@ export default defineConfig(({ mode, command }) => {
   const siteUrl = (env.VITE_SITE_URL || FALLBACK_URL).replace(/\/$/, '')
   return {
     plugins: [react(), seo({ siteUrl, gaId: env.VITE_GA_ID, isBuild: command === 'build' })],
+    // 'threads' pool: the default forks pool times out on Windows paths containing spaces
+    test: { pool: 'threads', testTimeout: 20000, environment: 'jsdom', setupFiles: ['./src/test/setup.js'], globals: true, css: false },
   }
 })

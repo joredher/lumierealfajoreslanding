@@ -1,30 +1,36 @@
 import { useState } from 'react'
-import { BOX_SIZE, FLAVORS, SITE, formatPrice, sizeOf } from '../data/site'
+import { BOX_SIZE, DELIVERY_FEE, FLAVORS, SITE, formatPrice, itemPrice, itemUnits, sizeOf } from '../data/site'
 import { CloseIcon, TrashIcon } from './Icons'
 
 const flavorOf = (id) => FLAVORS.find((f) => f.id === id)
 const describe = (flavors) => Object.entries(flavors).map(([id, q]) => `${q} x ${flavorOf(id)?.name ?? id}`)
-const priceOf = (box) => sizeOf(box.size).price
+const isLoose = (item) => item.kind === 'loose'
+const titleOf = (item) =>
+  isLoose(item) ? `${itemUnits(item)} alfajores sueltos · ${sizeOf(item.size).label}` : `Caja de ${BOX_SIZE} · ${sizeOf(item.size).label}`
 
 export default function CartDrawer({ open, onClose, cart, onBuild }) {
   const [form, setForm] = useState({ name: '', phone: '', delivery: 'retiro', address: '', notes: '' })
   const { boxes } = cart
-  const total = boxes.reduce((s, b) => s + priceOf(b), 0)
+  const delivery = form.delivery === 'envio'
+  const subtotal = boxes.reduce((s, b) => s + itemPrice(b), 0)
+  const total = subtotal + (delivery ? DELIVERY_FEE : 0)
   const update = (k) => (e) => setForm({ ...form, [k]: e.target.value })
 
   const submit = (e) => {
     e.preventDefault()
     const text = [
       `Hola ${SITE.name}! Quiero hacer un pedido:`,
-      ...boxes.flatMap((b, i) => [
-        `Caja ${i + 1} ${sizeOf(b.size).label.toUpperCase()} (${BOX_SIZE} alfajores) — ${formatPrice(priceOf(b))}`,
+      ...boxes.flatMap((b) => [
+        `${titleOf(b).replace(' · ', ' ').toUpperCase()} — ${formatPrice(itemPrice(b))}`,
         ...describe(b.flavors).map((l) => `   • ${l}`),
       ]),
+      `Subtotal: ${formatPrice(subtotal)}`,
+      ...(delivery ? [`Domicilio: ${formatPrice(DELIVERY_FEE)}`] : []),
       `Total: ${formatPrice(total)}`,
       '',
       `Nombre: ${form.name}`,
       `Teléfono: ${form.phone}`,
-      form.delivery === 'envio' ? `Domicilio en ${SITE.city}: ${form.address}` : 'Recogida en persona',
+      delivery ? `Domicilio en ${SITE.city}: ${form.address}` : 'Recogida en persona',
       ...(form.notes ? [`Notas: ${form.notes}`] : []),
     ].join('\n')
     window.open(`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener')
@@ -47,18 +53,18 @@ export default function CartDrawer({ open, onClose, cart, onBuild }) {
         {boxes.length === 0 ? (
           <div className="empty">
             <img src="/img/lumiere-artesanal-logo.webp" alt="" width="96" height="96" />
-            <p>Aún no has armado ninguna caja.</p>
-            <button className="btn" onClick={addAnother}>Arma tu caja</button>
+            <p>Aún no has elegido nada.</p>
+            <button className="btn" onClick={addAnother}>Haz tu pedido</button>
           </div>
         ) : (
           <form onSubmit={submit}>
             <ul className="boxes">
-              {boxes.map((b, i) => (
+              {boxes.map((b) => (
                 <li key={b.uid} className="box-card">
                   <div className="box-top">
-                    <strong>Caja {i + 1} · {sizeOf(b.size).label}</strong>
-                    <span className="box-price">{formatPrice(priceOf(b))}</span>
-                    <button type="button" className="icon-btn sm" onClick={() => cart.remove(b.uid)} aria-label={`Quitar caja ${i + 1}`}><TrashIcon width="18" height="18" /></button>
+                    <strong>{titleOf(b)}</strong>
+                    <span className="box-price">{formatPrice(itemPrice(b))}</span>
+                    <button type="button" className="icon-btn sm" onClick={() => cart.remove(b.uid)} aria-label={`Quitar ${titleOf(b)}`}><TrashIcon width="18" height="18" /></button>
                   </div>
                   <ul className="chips">
                     {Object.entries(b.flavors).map(([id, q]) => (
@@ -72,18 +78,23 @@ export default function CartDrawer({ open, onClose, cart, onBuild }) {
                 </li>
               ))}
             </ul>
-            <button type="button" className="btn btn-ghost btn-sm" onClick={addAnother}>+ Agregar otra caja</button>
-            <p className="total">Total <strong>{formatPrice(total)}</strong></p>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={addAnother}>+ Agregar más</button>
+
+            <dl className="totals">
+              <div><dt>Subtotal</dt><dd>{formatPrice(subtotal)}</dd></div>
+              {delivery && <div><dt>Domicilio</dt><dd>{formatPrice(DELIVERY_FEE)}</dd></div>}
+              <div className="total"><dt>Total</dt><dd><strong>{formatPrice(total)}</strong></dd></div>
+            </dl>
 
             <label>Nombre<input required value={form.name} onChange={update('name')} autoComplete="name" /></label>
             <label>Teléfono<input required type="tel" value={form.phone} onChange={update('phone')} autoComplete="tel" /></label>
             <label>Entrega
               <select value={form.delivery} onChange={update('delivery')}>
-                <option value="retiro">Recoger en persona</option>
-                <option value="envio">Domicilio en {SITE.city}</option>
+                <option value="retiro">Recoger en persona (sin costo)</option>
+                <option value="envio">Domicilio en {SITE.city} (+{formatPrice(DELIVERY_FEE)})</option>
               </select>
             </label>
-            {form.delivery === 'envio' && (
+            {delivery && (
               <label>Dirección<input required value={form.address} onChange={update('address')} autoComplete="street-address" /></label>
             )}
             <label>Notas (opcional)<textarea rows="2" value={form.notes} onChange={update('notes')} /></label>

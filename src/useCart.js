@@ -1,11 +1,11 @@
 import { useEffect, useReducer } from 'react'
 import { CART_KEY, getInitialOrder } from './orderStore'
 
-// Cart = list of boxes. Each box: { uid, size: 'mini' | 'grande', flavors: { [flavorId]: qty } }
+// Cart = list of items. Each item: { uid, kind: 'box' | 'loose', size: 'mini' | 'grande', flavors: { [flavorId]: qty } }
 function reducer(state, action) {
   switch (action.type) {
     case 'add':
-      return [...state, { uid: crypto.randomUUID(), size: action.size, flavors: action.flavors }]
+      return [...state, { uid: crypto.randomUUID(), kind: action.kind, size: action.size, flavors: action.flavors }]
     case 'remove':
       return state.filter((b) => b.uid !== action.uid)
     case 'clear':
@@ -26,7 +26,7 @@ export function useCart() {
   }, [boxes])
   return {
     boxes,
-    add: (flavors, size) => dispatch({ type: 'add', flavors, size }),
+    add: (flavors, size, kind = 'box') => dispatch({ type: 'add', flavors, size, kind }),
     remove: (uid) => dispatch({ type: 'remove', uid }),
     clear: () => dispatch({ type: 'clear' }),
   }

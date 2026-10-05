@@ -9,7 +9,13 @@ export default function FlavorViewer({ index, onClose, onNav, draft, boxFull, on
   const open = index !== null
   const f = open ? FLAVORS[index] : null
 
-  useEffect(() => setZoom(null), [index])
+  useEffect(() => {
+    setZoom(null)
+    // keep the selected thumbnail visible in the strip
+    const strip = document.querySelector('.thumbs')
+    const on = strip?.querySelector('.on')
+    if (strip && on) strip.scrollTo({ left: on.offsetLeft - strip.clientWidth / 2 + on.offsetWidth / 2, behavior: 'smooth' })
+  }, [index])
 
   useEffect(() => {
     if (!open) return

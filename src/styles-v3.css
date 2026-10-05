@@ -202,7 +202,8 @@ img.reveal.in { transform: none; }
 .tags li { padding: .25rem .75rem; border-radius: 999px; background: var(--tint); border: 1.5px solid var(--maroon); font-weight: 700; font-size: .82rem; }
 .viewer-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
 .viewer-actions .btn { display: inline-flex; align-items: center; gap: .4rem; }
-.thumbs { grid-area: thumbs; display: flex; gap: .5rem; padding: .8rem 1.25rem 1.1rem; overflow-x: auto; justify-content: center; border-top: 2px dashed var(--amber); }
+.thumbs { grid-area: thumbs; display: flex; gap: .5rem; padding: .8rem 1.25rem 1.1rem; overflow-x: auto; overflow-y: hidden; justify-content: safe center; border-top: 2px dashed var(--amber); scrollbar-width: none; }
+.thumbs::-webkit-scrollbar { display: none; }
 .thumbs button { flex: none; padding: 0; width: 56px; height: 48px; border-radius: 10px; overflow: hidden; border: 2px solid transparent; opacity: .6; cursor: pointer; transition: opacity .2s, transform .2s, border-color .2s; background: none; }
 .thumbs button:hover { opacity: 1; transform: translateY(-3px); }
 .thumbs button.on { opacity: 1; border-color: var(--orange); transform: translateY(-3px) scale(1.08); }

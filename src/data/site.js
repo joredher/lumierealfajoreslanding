@@ -34,11 +34,11 @@ export const FLAVORS = [
   { id: 'nucita', tint: '#F0D9BD', tags: ['Nucita', 'Barquillo', 'Chocolate blanco'], name: 'Nucita', desc: 'Relleno cremoso de Nucita, chocolate blanco y barquillo.', isNew: true },
 ].map((f) => ({ ...f, image: `/img/${f.id}.webp` }))
 
-// Rolls de canela: se venden por catálogo de WhatsApp. TODO: agregar foto (image: '/img/rolls.webp') y precios.
+// Rolls de canela: se venden por catálogo de WhatsApp. TODO: agregar precios.
 export const ROLLS = {
   name: 'Rolls de canela',
   desc: 'Esponjosos, con canela y azúcar, recién horneados. Mira el catálogo y pide por WhatsApp.',
-  image: '', // TODO
+  image: '/img/rolls.webp',
 }
 
 export const formatPrice = (n) =>

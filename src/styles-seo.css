@@ -20,3 +20,7 @@
 .footer .credit { font-size: .8rem; opacity: .75; }
 .footer .credit a { color: var(--amber); font-weight: 700; text-underline-offset: 3px; }
 .footer .credit a:hover { color: var(--cream); }
+
+/* keep the footer text clear of the floating buttons */
+.footer { padding-bottom: 6rem; }
+@media (min-width: 761px) { .footer { padding-bottom: 5rem; } }

@@ -11,7 +11,7 @@ export default function Products({ draft, onPick }) {
         {FLAVORS.map((f) => (
           <article key={f.id} className="card">
             <div className="card-img">
-              <img src={f.image} alt={`Alfajor ${f.name}`} loading="lazy" width="540" height="450" />
+              <img src={f.image} alt={`Alfajor ${f.name}`} loading="lazy" width="810" height="675" />
               {f.isNew && <span className="badge">Nuevo sabor ✨</span>}
               {draft[f.id] > 0 && <span className="badge in-box">En tu caja: {draft[f.id]}</span>}
             </div>

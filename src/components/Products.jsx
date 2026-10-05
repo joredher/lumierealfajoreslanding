@@ -14,7 +14,7 @@ export default function Products({ draft, onPick, onView }) {
         {FLAVORS.map((f, i) => (
           <Reveal as="article" key={f.id} className="card" delay={(i % 3) * 110} style={{ '--tint': f.tint }}>
             <button className="card-img" onClick={() => onView(i)} aria-label={`Ver ${f.name} de cerca`}>
-              <img src={f.image} alt={`Alfajor ${f.name}`} loading="lazy" width="1200" height="1000" />
+              <img src={f.image} alt={f.alt} loading="lazy" width={f.width} height={f.height} />
               <span className="card-peek"><ZoomIcon width="18" height="18" /> Ver de cerca</span>
               {f.isNew && <span className="badge">Nuevo sabor ✨</span>}
               {draft[f.id] > 0 && <span className="badge in-box">En tu caja: {draft[f.id]}</span>}

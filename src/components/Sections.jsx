@@ -1,4 +1,4 @@
-import { ROLLS, SIZES, SITE, formatPrice } from '../data/site'
+import { IMAGES, ROLLS, SIZES, SITE, formatPrice } from '../data/site'
 import Reveal from './Reveal'
 import Sun from './Sun'
 
@@ -7,16 +7,16 @@ export function Rolls() {
   return (
     <section id="rolls" className="section rolls">
       <Reveal className="rolls-art">
-        {ROLLS.image ? <img src={ROLLS.image} alt={ROLLS.name} loading="lazy" /> : <Sun className="rolls-sun" rays={12} />}
+        {ROLLS.image ? <img src={ROLLS.image} alt={ROLLS.alt} width={ROLLS.width} height={ROLLS.height} loading="lazy" /> : <Sun className="rolls-sun" rays={12} />}
       </Reveal>
       <Reveal delay={120}>
-        <h2 className="h-deco left">{ROLLS.name}</h2>
+        <h2 className="h-deco left">{ROLLS.name} en Yopal</h2>
         <p>{ROLLS.desc}</p>
         <div className="hero-cta">
           {SITE.catalogUrl && (
             <a className="btn" href={SITE.catalogUrl} target="_blank" rel="noopener noreferrer">Ver catálogo en WhatsApp</a>
           )}
-          <a className={`btn ${SITE.catalogUrl ? 'btn-ghost' : ''}`} href={`https://wa.me/${SITE.whatsapp}?text=${waText}`} target="_blank" rel="noopener noreferrer">Pedir rolls</a>
+          <a className={`btn ${SITE.catalogUrl ? 'btn-ghost' : ''}`} href={`https://wa.me/${SITE.whatsapp}?text=${waText}`} target="_blank" rel="noopener noreferrer">Pedir rolls de canela</a>
         </div>
       </Reveal>
     </section>
@@ -24,16 +24,17 @@ export function Rolls() {
 }
 
 export function About() {
+  const { juliana } = IMAGES
   return (
     <section id="historia" className="section about">
-      <Reveal as="img" className="about-photo" src="/img/juliana.webp" alt="Juliana, la creadora de Lumière Artesanal, en su puesto de alfajores" width="320" height="320" loading="lazy" />
+      <Reveal as="img" className="about-photo" src={juliana.src} alt={juliana.alt} width={juliana.width} height={juliana.height} loading="lazy" />
       <Reveal delay={150}>
         <h2 className="h-deco left">Hola, soy Juliana</h2>
         {/* TODO: reemplazar con la historia real de Juliana */}
         <p>
-          Soy Juliana, y desde mi cocina en Yopal preparo cada alfajor a mano, con calma y mucho cariño.
-          Lumière nació del deseo de compartir sabores que alegran el día: bizcocho suave, arequipe de verdad
-          y combinaciones que te hacen volver por otro. Gracias por ser parte de esta historia. ✨
+          Soy Juliana, y desde mi cocina en Yopal preparo cada alfajor a mano, con calma y mucho cariño, a partir de
+          recetas argentinas. Lumière nació del deseo de compartir sabores que alegran el día: bizcocho suave,
+          arequipe de verdad y combinaciones que te hacen volver por otro. Gracias por ser parte de esta historia. ✨
         </p>
         <p className="signature">Somos luz.</p>
       </Reveal>
@@ -49,7 +50,7 @@ export function HowTo() {
   ]
   return (
     <section id="como-pedir" className="section">
-      <Reveal as="h2" className="h-deco">Cómo pedir</Reveal>
+      <Reveal as="h2" className="h-deco">Cómo pedir tus alfajores</Reveal>
       <ol className="steps">
         {steps.map(([n, t, d], i) => (
           <Reveal as="li" key={n} delay={i * 130}>
@@ -69,19 +70,33 @@ export function Contact() {
       <Reveal as="h2" className="h-deco">Hablemos</Reveal>
       <Reveal as="p" delay={80}>¿Pedidos para eventos, regalos o preguntas? Escríbenos desde {SITE.city}.</Reveal>
       <Reveal className="hero-cta" delay={160}>
-        <a className="btn" href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer">WhatsApp {SITE.whatsappDisplay}</a>
-        <a className="btn btn-ghost" href={`https://www.instagram.com/${SITE.instagram}/`} target="_blank" rel="noopener noreferrer">Instagram @{SITE.instagram}</a>
+        <a className="btn" href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp {SITE.whatsappDisplay}</a>
+        <a className="btn btn-ghost" href={`https://www.instagram.com/${SITE.instagram}/`} target="_blank" rel="noopener noreferrer">Síguenos en Instagram @{SITE.instagram}</a>
         {SITE.email && <a className="btn btn-ghost" href={`mailto:${SITE.email}`}>{SITE.email}</a>}
       </Reveal>
     </section>
   )
 }
 
+const FOOTER_LINKS = [
+  ['#sabores', 'Alfajores artesanales: los 9 sabores'],
+  ['#inicio', 'Comprar alfajores argentinos en Yopal'],
+  ['#rolls', 'Rolls de canela en Yopal'],
+  ['#como-pedir', 'Cómo pedir tu caja de alfajores'],
+  ['#historia', 'Conoce a Juliana, creadora de Lumière'],
+  ['#contacto', 'Contacto y pedidos por WhatsApp'],
+]
+
 export function Footer() {
   return (
     <footer className="footer">
-      <img src="/logo.webp" alt="" width="56" height="56" />
-      <p>© {new Date().getFullYear()} {SITE.name} · {SITE.tagline}</p>
+      <img src={IMAGES.logo.src} alt="" width="56" height="56" />
+      <nav aria-label="Pie de página" className="footer-nav">
+        {FOOTER_LINKS.map(([href, label]) => (
+          <a key={href + label} href={href}>{label}</a>
+        ))}
+      </nav>
+      <p>© {new Date().getFullYear()} {SITE.name} · {SITE.tagline} · Recetas argentinas, hechas en Colombia</p>
     </footer>
   )
 }

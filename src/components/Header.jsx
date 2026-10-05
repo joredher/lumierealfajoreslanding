@@ -29,7 +29,7 @@ export default function Header({ count, onCart }) {
   return (
     <header className="header">
       <a href="#inicio" className="brand" aria-label={SITE.name}>
-        <img src="/logo.webp" alt="" width="48" height="48" />
+        <img src="/img/lumiere-artesanal-logo.webp" alt="" width="48" height="48" />
         <span>{SITE.name}</span>
       </a>
       <nav aria-label="Principal">

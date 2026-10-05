@@ -28,6 +28,8 @@ export default function CartDrawer({ open, onClose, cart, onBuild }) {
       ...(form.notes ? [`Notas: ${form.notes}`] : []),
     ].join('\n')
     window.open(`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener')
+    // GA4 (only present when VITE_GA_ID is set): count the order as a lead
+    window.gtag?.('event', 'generate_lead', { currency: SITE.currency, value: total })
     cart.clear()
     onClose()
   }
@@ -44,7 +46,7 @@ export default function CartDrawer({ open, onClose, cart, onBuild }) {
         </div>
         {boxes.length === 0 ? (
           <div className="empty">
-            <img src="/logo.webp" alt="" width="96" height="96" />
+            <img src="/img/lumiere-artesanal-logo.webp" alt="" width="96" height="96" />
             <p>Aún no has armado ninguna caja.</p>
             <button className="btn" onClick={addAnother}>Arma tu caja</button>
           </div>

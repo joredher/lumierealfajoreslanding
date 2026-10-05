@@ -5,10 +5,13 @@ import Products from './components/Products'
 import CartDrawer from './components/CartDrawer'
 import BoxBuilder, { FloatingButton, countOf } from './components/BoxBuilder'
 import FlavorViewer from './components/FlavorViewer'
+import ExpiredModal from './components/ExpiredModal'
 import ScrollFX from './components/ScrollFX'
 import WhatsAppFab from './components/WhatsAppFab'
 import { About, Rolls, HowTo, Contact, Footer } from './components/Sections'
 import { useCart } from './useCart'
+import { useOrderExpiry } from './useOrderExpiry'
+import { clearOrderTs, getInitialOrder } from './orderStore'
 import { BOX_SIZE, DEFAULT_SIZE, FLAVORS } from './data/site'
 
 export default function App() {
@@ -18,7 +21,21 @@ export default function App() {
   const [viewing, setViewing] = useState(null) // flavour index or null
   const [draft, setDraft] = useState({})
   const [size, setSize] = useState(DEFAULT_SIZE)
+  // true when a saved order was left untouched for 15+ minutes (or the order just expired on screen)
+  const [expired, setExpired] = useState(() => getInitialOrder().expired)
   const boxFull = countOf(draft) >= BOX_SIZE
+
+  const resetOrder = () => {
+    cart.clear()
+    setDraft({})
+    setSize(DEFAULT_SIZE)
+    setCartOpen(false)
+    setBuilderOpen(false)
+    setViewing(null)
+    clearOrderTs()
+    setExpired(true)
+  }
+  useOrderExpiry(draft, cart.boxes, resetOrder)
 
   const addToDraft = (id) => !boxFull && setDraft((d) => ({ ...d, [id]: (d[id] || 0) + 1 }))
   const pick = (id) => {
@@ -33,20 +50,21 @@ export default function App() {
   }
   const nav = useCallback((d) => setViewing((i) => (i === null ? i : (i + d + FLAVORS.length) % FLAVORS.length)), [])
 
-  const anyOpen = cartOpen || builderOpen || viewing !== null
+  const anyOpen = cartOpen || builderOpen || viewing !== null || expired
   // lock page scroll behind panels; Esc closes whatever is on top
   useEffect(() => {
     document.body.style.overflow = anyOpen ? 'hidden' : ''
     if (!anyOpen) return
     const onKey = (e) => {
       if (e.key !== 'Escape') return
-      if (viewing !== null) setViewing(null)
+      if (expired) setExpired(false)
+      else if (viewing !== null) setViewing(null)
       else if (builderOpen) setBuilderOpen(false)
       else setCartOpen(false)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [anyOpen, viewing, builderOpen])
+  }, [anyOpen, expired, viewing, builderOpen])
 
   return (
     <>
@@ -74,6 +92,11 @@ export default function App() {
       />
       <BoxBuilder open={builderOpen} onClose={() => setBuilderOpen(false)} draft={draft} setDraft={setDraft} size={size} setSize={setSize} onDone={finishBox} />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} cart={cart} onBuild={() => setBuilderOpen(true)} />
+      <ExpiredModal
+        open={expired}
+        onClose={() => setExpired(false)}
+        onRestart={() => { setExpired(false); setBuilderOpen(true) }}
+      />
     </>
   )
 }

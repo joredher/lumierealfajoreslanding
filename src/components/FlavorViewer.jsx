@@ -58,7 +58,7 @@ export default function FlavorViewer({ index, onClose, onNav, draft, boxFull, on
             <img
               key={f.id}
               src={f.image}
-              alt={`Alfajor ${f.name}`}
+              alt={f.alt}
               style={zoom ? { transformOrigin: `${zoom.x}% ${zoom.y}%` } : undefined}
               draggable="false"
             />

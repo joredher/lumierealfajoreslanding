@@ -1,6 +1,5 @@
 import { useEffect, useReducer } from 'react'
-
-const KEY = 'lumiere-cart-v2'
+import { CART_KEY, getInitialOrder } from './orderStore'
 
 // Cart = list of boxes. Each box: { uid, size: 'mini' | 'grande', flavors: { [flavorId]: qty } }
 function reducer(state, action) {
@@ -16,20 +15,11 @@ function reducer(state, action) {
   }
 }
 
-function load() {
-  try {
-    const v = JSON.parse(localStorage.getItem(KEY))
-    return Array.isArray(v) ? v : []
-  } catch {
-    return []
-  }
-}
-
 export function useCart() {
-  const [boxes, dispatch] = useReducer(reducer, undefined, load)
+  const [boxes, dispatch] = useReducer(reducer, undefined, () => getInitialOrder().boxes)
   useEffect(() => {
     try {
-      localStorage.setItem(KEY, JSON.stringify(boxes))
+      localStorage.setItem(CART_KEY, JSON.stringify(boxes))
     } catch {
       /* private mode: cart just won't persist */
     }

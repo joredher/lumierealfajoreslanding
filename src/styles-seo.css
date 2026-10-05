@@ -1,0 +1,18 @@
+/* footer internal links */
+.footer { display: grid; justify-items: center; gap: .75rem; }
+.footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem 1.25rem; max-width: 900px; }
+.footer-nav a { color: var(--cream); text-underline-offset: 3px; font-weight: 600; font-size: .95rem; }
+.footer-nav a:hover { color: var(--amber); }
+.footer p { margin: 0; font-size: .9rem; opacity: .85; }
+
+/* "your selection expired" modal */
+.modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 1rem; animation: fade .25s; }
+.modal-card {
+  position: relative; width: min(440px, 100%); padding: 2rem 1.75rem 1.5rem; text-align: center;
+  background: var(--cream); border: 3px solid var(--maroon); border-radius: 22px; box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
+  animation: pop-in .4s cubic-bezier(.2, .9, .3, 1.1);
+}
+.modal-card img { border-radius: 50%; border: 3px solid var(--amber); }
+.modal-card h2 { margin: .75rem 0 .5rem; font-size: 1.6rem; }
+.modal-card .viewer-actions { justify-content: center; margin-top: 1.25rem; }
+.modal-close { position: absolute; top: .6rem; right: .6rem; cursor: pointer; color: var(--maroon); }

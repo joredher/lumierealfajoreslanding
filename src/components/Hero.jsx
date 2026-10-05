@@ -1,4 +1,4 @@
-import { BOX_PRICE, BOX_SIZE, SITE, formatPrice } from '../data/site'
+import { BOX_SIZE, SIZES, SITE, formatPrice } from '../data/site'
 import Sun from './Sun'
 
 export default function Hero({ onBuild }) {
@@ -8,8 +8,8 @@ export default function Hero({ onBuild }) {
         <p className="eyebrow">Alfajores artesanales · {SITE.city}</p>
         <h1>Alfajores hechos a mano, con sabor a casa</h1>
         <p className="lead">
-          Bizcocho suave, arequipe generoso y sabores para todos los gustos. Arma tu caja de {BOX_SIZE} alfajores
-          mezclando los que más te gusten por solo {formatPrice(BOX_PRICE)}.
+          Bizcocho suave, arequipe generoso y sabores para todos los gustos. Arma tu caja de {BOX_SIZE} mezclando los
+          que más te gusten: {SIZES.map((s) => `${s.label.toLowerCase()}s ${formatPrice(s.price)}`).join(' o ')}.
         </p>
         <div className="hero-cta">
           <button className="btn" onClick={onBuild}>Arma tu caja</button>

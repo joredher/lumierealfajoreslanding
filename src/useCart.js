@@ -2,11 +2,11 @@ import { useEffect, useReducer } from 'react'
 
 const KEY = 'lumiere-cart-v2'
 
-// Cart = list of boxes. Each box: { uid, flavors: { [flavorId]: qty } }
+// Cart = list of boxes. Each box: { uid, size: 'mini' | 'grande', flavors: { [flavorId]: qty } }
 function reducer(state, action) {
   switch (action.type) {
     case 'add':
-      return [...state, { uid: crypto.randomUUID(), flavors: action.flavors }]
+      return [...state, { uid: crypto.randomUUID(), size: action.size, flavors: action.flavors }]
     case 'remove':
       return state.filter((b) => b.uid !== action.uid)
     case 'clear':
@@ -36,7 +36,7 @@ export function useCart() {
   }, [boxes])
   return {
     boxes,
-    add: (flavors) => dispatch({ type: 'add', flavors }),
+    add: (flavors, size) => dispatch({ type: 'add', flavors, size }),
     remove: (uid) => dispatch({ type: 'remove', uid }),
     clear: () => dispatch({ type: 'clear' }),
   }

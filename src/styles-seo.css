@@ -16,3 +16,7 @@
 .modal-card h2 { margin: .75rem 0 .5rem; font-size: 1.6rem; }
 .modal-card .viewer-actions { justify-content: center; margin-top: 1.25rem; }
 .modal-close { position: absolute; top: .6rem; right: .6rem; cursor: pointer; color: var(--maroon); }
+
+.footer .credit { font-size: .8rem; opacity: .75; }
+.footer .credit a { color: var(--amber); font-weight: 700; text-underline-offset: 3px; }
+.footer .credit a:hover { color: var(--cream); }

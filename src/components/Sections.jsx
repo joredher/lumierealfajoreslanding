@@ -97,6 +97,10 @@ export function Footer() {
         ))}
       </nav>
       <p>© {new Date().getFullYear()} {SITE.name} · {SITE.tagline} · Recetas argentinas, hechas en Colombia</p>
+      <p className="credit">
+        Sitio creado por{' '}
+        <a href="https://eocodey.com" target="_blank" rel="noopener noreferrer">eocodey.com</a>
+      </p>
     </footer>
   )
 }

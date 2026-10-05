@@ -1,19 +1,16 @@
 import { useEffect, useReducer } from 'react'
 
-const KEY = 'lumiere-cart'
+const KEY = 'lumiere-cart-v2'
 
+// Cart = list of boxes. Each box: { uid, flavors: { [flavorId]: qty } }
 function reducer(state, action) {
   switch (action.type) {
     case 'add':
-      return { ...state, [action.id]: (state[action.id] || 0) + 1 }
-    case 'set': {
-      const next = { ...state }
-      if (action.qty <= 0) delete next[action.id]
-      else next[action.id] = action.qty
-      return next
-    }
+      return [...state, { uid: crypto.randomUUID(), flavors: action.flavors }]
+    case 'remove':
+      return state.filter((b) => b.uid !== action.uid)
     case 'clear':
-      return {}
+      return []
     default:
       return state
   }
@@ -21,26 +18,26 @@ function reducer(state, action) {
 
 function load() {
   try {
-    return JSON.parse(localStorage.getItem(KEY)) || {}
+    const v = JSON.parse(localStorage.getItem(KEY))
+    return Array.isArray(v) ? v : []
   } catch {
-    return {}
+    return []
   }
 }
 
 export function useCart() {
-  const [items, dispatch] = useReducer(reducer, undefined, load)
+  const [boxes, dispatch] = useReducer(reducer, undefined, load)
   useEffect(() => {
     try {
-      localStorage.setItem(KEY, JSON.stringify(items))
+      localStorage.setItem(KEY, JSON.stringify(boxes))
     } catch {
       /* private mode: cart just won't persist */
     }
-  }, [items])
+  }, [boxes])
   return {
-    items,
-    count: Object.values(items).reduce((a, b) => a + b, 0),
-    add: (id) => dispatch({ type: 'add', id }),
-    set: (id, qty) => dispatch({ type: 'set', id, qty }),
+    boxes,
+    add: (flavors) => dispatch({ type: 'add', flavors }),
+    remove: (uid) => dispatch({ type: 'remove', uid }),
     clear: () => dispatch({ type: 'clear' }),
   }
 }

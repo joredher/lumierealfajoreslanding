@@ -1,19 +1,19 @@
-import { SITE } from '../data/site'
+import { BOX_PRICE, BOX_SIZE, SITE, formatPrice } from '../data/site'
 import Sun from './Sun'
 
-export default function Hero() {
+export default function Hero({ onBuild }) {
   return (
     <section id="inicio" className="hero">
       <div className="hero-text">
-        <p className="eyebrow">Repostería artesanal</p>
-        <h1>Alfajores argentinos, hechos a mano con cariño</h1>
+        <p className="eyebrow">Alfajores artesanales · {SITE.city}</p>
+        <h1>Alfajores hechos a mano, con sabor a casa</h1>
         <p className="lead">
-          Tapitas de maicena que se deshacen en la boca, dulce de leche generoso y el sabor de casa en cada bocado.
-          Pedí online y recibí {SITE.name} fresquitos.
+          Bizcocho suave, arequipe generoso y sabores para todos los gustos. Arma tu caja de {BOX_SIZE} alfajores
+          mezclando los que más te gusten por solo {formatPrice(BOX_PRICE)}.
         </p>
         <div className="hero-cta">
-          <a className="btn" href="#productos">Ver productos</a>
-          <a className="btn btn-ghost" href="#como-pedir">¿Cómo pedir?</a>
+          <button className="btn" onClick={onBuild}>Arma tu caja</button>
+          <a className="btn btn-ghost" href="#sabores">Ver sabores</a>
         </div>
       </div>
       <div className="hero-art">

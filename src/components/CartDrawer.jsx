@@ -1,22 +1,26 @@
 import { useState } from 'react'
-import { PRODUCTS, SITE, formatPrice } from '../data/site'
+import { BOX_PRICE, BOX_SIZE, FLAVORS, SITE, formatPrice } from '../data/site'
 
-export default function CartDrawer({ open, onClose, cart }) {
+const flavorName = (id) => FLAVORS.find((f) => f.id === id)?.name ?? id
+const describe = (flavors) =>
+  Object.entries(flavors).map(([id, q]) => `${q} x ${flavorName(id)}`)
+
+export default function CartDrawer({ open, onClose, cart, onBuild }) {
   const [form, setForm] = useState({ name: '', phone: '', delivery: 'retiro', address: '', notes: '' })
-  const lines = PRODUCTS.filter((p) => cart.items[p.id]).map((p) => ({ ...p, qty: cart.items[p.id] }))
-  const total = lines.reduce((s, l) => s + l.price * l.qty, 0)
+  const { boxes } = cart
+  const total = boxes.length * BOX_PRICE
   const update = (k) => (e) => setForm({ ...form, [k]: e.target.value })
 
   const submit = (e) => {
     e.preventDefault()
     const text = [
       `Hola ${SITE.name}! Quiero hacer un pedido:`,
-      ...lines.map((l) => `• ${l.qty} x ${l.name} (${l.unit}) — ${formatPrice(l.price * l.qty)}`),
+      ...boxes.flatMap((b, i) => [`Caja ${i + 1} (${BOX_SIZE} alfajores) — ${formatPrice(BOX_PRICE)}`, ...describe(b.flavors).map((l) => `   • ${l}`)]),
       `Total: ${formatPrice(total)}`,
       '',
       `Nombre: ${form.name}`,
       `Teléfono: ${form.phone}`,
-      form.delivery === 'envio' ? `Envío a: ${form.address}` : 'Retiro en persona',
+      form.delivery === 'envio' ? `Domicilio en ${SITE.city}: ${form.address}` : 'Recogida en persona',
       ...(form.notes ? [`Notas: ${form.notes}`] : []),
     ].join('\n')
     window.open(`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener')
@@ -32,33 +36,33 @@ export default function CartDrawer({ open, onClose, cart }) {
           <h2>Tu pedido</h2>
           <button className="icon-btn" onClick={onClose} aria-label="Cerrar">✕</button>
         </div>
-        {lines.length === 0 ? (
-          <p className="empty">Tu carrito está vacío. ¡Agregá algo rico! 🍪</p>
+        {boxes.length === 0 ? (
+          <div className="empty">
+            <p>Tu pedido está vacío. ¡Arma tu caja! 🍪</p>
+            <button className="btn" onClick={() => { onClose(); onBuild() }}>Armar caja</button>
+          </div>
         ) : (
           <form onSubmit={submit}>
             <ul className="lines">
-              {lines.map((l) => (
-                <li key={l.id}>
+              {boxes.map((b, i) => (
+                <li key={b.uid}>
                   <div>
-                    <strong>{l.name}</strong>
-                    <small>{l.unit} · {formatPrice(l.price)}</small>
+                    <strong>Caja {i + 1} · {formatPrice(BOX_PRICE)}</strong>
+                    {describe(b.flavors).map((l) => <small key={l}>{l}</small>)}
                   </div>
-                  <div className="qty">
-                    <button type="button" onClick={() => cart.set(l.id, l.qty - 1)} aria-label="Quitar uno">−</button>
-                    <span>{l.qty}</span>
-                    <button type="button" onClick={() => cart.set(l.id, l.qty + 1)} aria-label="Agregar uno">+</button>
-                  </div>
+                  <button type="button" className="icon-btn" onClick={() => cart.remove(b.uid)} aria-label={`Quitar caja ${i + 1}`}>🗑</button>
                 </li>
               ))}
             </ul>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={() => { onClose(); onBuild() }}>+ Otra caja</button>
             <p className="total">Total <strong>{formatPrice(total)}</strong></p>
 
             <label>Nombre<input required value={form.name} onChange={update('name')} autoComplete="name" /></label>
             <label>Teléfono<input required type="tel" value={form.phone} onChange={update('phone')} autoComplete="tel" /></label>
             <label>Entrega
               <select value={form.delivery} onChange={update('delivery')}>
-                <option value="retiro">Retiro en persona</option>
-                <option value="envio">Envío a domicilio</option>
+                <option value="retiro">Recoger en persona</option>
+                <option value="envio">Domicilio en {SITE.city}</option>
               </select>
             </label>
             {form.delivery === 'envio' && (

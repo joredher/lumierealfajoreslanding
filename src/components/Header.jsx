@@ -8,12 +8,12 @@ export default function Header({ count, onCart }) {
         <span>{SITE.name}</span>
       </a>
       <nav aria-label="Principal">
-        <a href="#productos">Productos</a>
+        <a href="#sabores">Sabores</a>
         <a href="#historia">Nosotros</a>
         <a href="#como-pedir">Cómo pedir</a>
         <a href="#contacto">Contacto</a>
       </nav>
-      <button className="cart-btn" onClick={onCart} aria-label={`Abrir carrito, ${count} productos`}>
+      <button className="cart-btn" onClick={onCart} aria-label={`Abrir carrito, ${count} cajas`}>
         🛒 <span className="cart-count">{count}</span>
       </button>
     </header>

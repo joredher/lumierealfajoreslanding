@@ -1,56 +1,30 @@
-// ⚠️ Edit this file to personalise the site. Everything marked TODO is a placeholder.
 export const SITE = {
   name: 'Lumière Artesanal',
-  tagline: 'Alfajores argentinos hechos a mano',
-  url: 'https://www.lumiereartesanal.com', // TODO: real domain
-  whatsapp: '5490000000000', // TODO: country code + number, digits only (e.g. 5491155551234)
-  email: 'hola@lumiereartesanal.com', // TODO
-  instagram: 'lumiere.artesanal', // TODO
-  city: 'Tu ciudad', // TODO
-  currency: 'USD', // TODO
-  locale: 'es-AR',
+  tagline: 'Alfajores artesanales en Yopal, Casanare',
+  url: 'https://www.lumiereartesanal.com', // TODO: dominio real
+  whatsapp: '573214659653',
+  whatsappDisplay: '+57 321 465 9653',
+  email: '', // TODO (opcional): si hay correo, se muestra en Contacto
+  instagram: 'lumiere.artesanall',
+  city: 'Yopal, Casanare',
+  currency: 'COP',
+  locale: 'es-CO',
 }
 
-// Prices are placeholders. `image` is optional; without it a sun-motif illustration is shown.
-export const PRODUCTS = [
-  {
-    id: 'alfajor-clasico',
-    name: 'Alfajores de Maicena',
-    badge: 'El favorito',
-    desc: 'Tapitas suaves que se deshacen, rellenas de dulce de leche y rebozadas en coco rallado. La receta clásica argentina.',
-    unit: 'caja x 6',
-    price: 14,
-  },
-  {
-    id: 'alfajor-chocolate',
-    name: 'Alfajores de Chocolate',
-    desc: 'Doble tapa de cacao, dulce de leche generoso y baño de chocolate semiamargo.',
-    unit: 'caja x 6',
-    price: 18,
-  },
-  {
-    id: 'alfajor-surtido',
-    name: 'Caja Surtida Lumière',
-    badge: 'Para regalar',
-    desc: 'Una selección de nuestros alfajores en caja de regalo. Ideal para sorprender.',
-    unit: 'caja x 12',
-    price: 32,
-  },
-  {
-    id: 'rolls-canela',
-    name: 'Rolls de Canela',
-    desc: 'Masa esponjosa, canela y azúcar morena, recién horneados. Dulces y reconfortantes.',
-    unit: 'caja x 4',
-    price: 12,
-  },
-  {
-    id: 'canelones',
-    name: 'Canelones',
-    desc: 'Nuestra versión artesanal, hecha por encargo con ingredientes frescos.',
-    unit: 'bandeja x 6',
-    price: 16,
-  },
-]
+export const BOX_SIZE = 4
+export const BOX_PRICE = 25000
+
+export const FLAVORS = [
+  { id: 'tradicional', name: 'Arequipe tradicional', desc: 'Bizcocho de chocolate, arequipe y cobertura de chocolate con hilos blancos.' },
+  { id: 'mora', name: 'Arequipe + mora', desc: 'Arequipe con mermelada de mora y crocante de maní por encima.' },
+  { id: 'maracuya', name: 'Arequipe + maracuyá', desc: 'Arequipe con un toque ácido de maracuyá, cubierto de chocolate blanco.' },
+  { id: 'lulo', name: 'Arequipe + lulo', desc: 'Arequipe y lulo, cobertura blanca con líneas de chocolate.' },
+  { id: 'oreo', name: 'Arequipe Oreo', desc: 'Arequipe con galleta Oreo, cobertura de chocolate blanco.' },
+  { id: 'redvelvet', name: 'Red Velvet', desc: 'Bizcocho red velvet con crema y cobertura blanca.' },
+  { id: 'milo', name: 'Milo', desc: 'Sabor a Milo con arequipe y cobertura de chocolate.' },
+  { id: 'nuez', name: 'Nuez', desc: 'Relleno de nueces con arequipe, cobertura de chocolate blanco.', isNew: true },
+  { id: 'nucita', name: 'Nucita', desc: 'Relleno cremoso de Nucita, chocolate blanco y barquillo.', isNew: true },
+].map((f) => ({ ...f, image: `/img/${f.id}.webp` }))
 
 export const formatPrice = (n) =>
   new Intl.NumberFormat(SITE.locale, { style: 'currency', currency: SITE.currency, maximumFractionDigits: 0 }).format(n)

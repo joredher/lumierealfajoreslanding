@@ -3,21 +3,26 @@ import { SITE } from '../data/site'
 export function About() {
   return (
     <section id="historia" className="section about">
-      <h2>Nuestra historia</h2>
-      {/* TODO: reemplazar con la historia real de la emprendedora */}
-      <p>
-        {SITE.name} nació en una cocina, con recetas de familia y la idea de compartir un pedacito de Argentina.
-        Cada alfajor se prepara a mano, sin apuros, con dulce de leche de verdad y mucho amor por el oficio.
-      </p>
+      <img className="about-photo" src="/img/juliana.webp" alt="Juliana, la creadora de Lumière Artesanal, en su puesto de alfajores" width="320" height="320" loading="lazy" />
+      <div>
+        <h2>Hola, soy Juliana</h2>
+        {/* TODO: reemplazar con la historia real de Juliana */}
+        <p>
+          Soy Juliana, y desde mi cocina en Yopal preparo cada alfajor a mano, con calma y mucho cariño.
+          Lumière nació del deseo de compartir sabores que alegran el día: bizcocho suave, arequipe de verdad
+          y combinaciones que te hacen volver por otro. Gracias por ser parte de esta historia. ✨
+        </p>
+        <p className="signature">Somos luz.</p>
+      </div>
     </section>
   )
 }
 
 export function HowTo() {
   const steps = [
-    ['1', 'Elegí', 'Agregá tus productos favoritos al carrito.'],
-    ['2', 'Confirmá', 'Dejá tu nombre y datos de entrega; te abrimos WhatsApp con el pedido listo.'],
-    ['3', 'Disfrutá', 'Coordinamos el pago y la entrega, y recibís todo fresco.'],
+    ['1', 'Arma tu caja', 'Elige 4 sabores, los que quieras, por $25.000.'],
+    ['2', 'Confirma', 'Déjanos tu nombre y datos de entrega; se abre WhatsApp con tu pedido listo.'],
+    ['3', 'Disfruta', 'Coordinamos el pago y la entrega en Yopal, y recibes todo fresco.'],
   ]
   return (
     <section id="como-pedir" className="section">
@@ -39,11 +44,11 @@ export function Contact() {
   return (
     <section id="contacto" className="section contact">
       <h2>Hablemos</h2>
-      <p>¿Pedidos para eventos, regalos o preguntas? Escribinos.</p>
+      <p>¿Pedidos para eventos, regalos o preguntas? Escríbenos desde {SITE.city}.</p>
       <div className="hero-cta">
-        <a className="btn" href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-        <a className="btn btn-ghost" href={`mailto:${SITE.email}`}>{SITE.email}</a>
-        <a className="btn btn-ghost" href={`https://instagram.com/${SITE.instagram}`} target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a className="btn" href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer">WhatsApp {SITE.whatsappDisplay}</a>
+        <a className="btn btn-ghost" href={`https://www.instagram.com/${SITE.instagram}/`} target="_blank" rel="noopener noreferrer">Instagram @{SITE.instagram}</a>
+        {SITE.email && <a className="btn btn-ghost" href={`mailto:${SITE.email}`}>{SITE.email}</a>}
       </div>
     </section>
   )

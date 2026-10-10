@@ -27,7 +27,7 @@ describe('pricing', () => {
 
 describe('contact data', () => {
   it('has the real WhatsApp number and Instagram', () => {
-    expect(SITE.whatsapp).toBe('573214659653')
+    expect(SITE.whatsapp).toBe('573144171683')
     expect(SITE.instagram).toBe('lumiere.artesanall')
     expect(SITE.catalogUrl).toBe('https://wa.me/c/573144171683')
   })

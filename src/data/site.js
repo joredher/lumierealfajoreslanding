@@ -3,8 +3,8 @@ export const SITE = {
   tagline: 'Alfajores artesanales en Yopal, Casanare',
   // Set VITE_SITE_URL in .env.local (see .env.example). Used for canonical/OG/sitemap at build time.
   url: (import.meta.env.VITE_SITE_URL || 'https://www.lumiereartesanal.com').replace(/\/$/, ''),
-  whatsapp: '573214659653',
-  whatsappDisplay: '+57 321 465 9653',
+  whatsapp: '573144171683',
+  whatsappDisplay: '+57 314 417 1683',
   catalogUrl: 'https://wa.me/c/573144171683', // catálogo de WhatsApp Business
   email: '', // TODO (opcional): si hay correo, se muestra en Contacto
   instagram: 'lumiere.artesanall',

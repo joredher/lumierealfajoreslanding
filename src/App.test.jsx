@@ -193,7 +193,7 @@ describe('sending the order', () => {
 
     expect(window.open).toHaveBeenCalledOnce()
     const url = new URL(window.open.mock.calls[0][0])
-    expect(url.origin + url.pathname).toBe('https://wa.me/573214659653')
+    expect(url.origin + url.pathname).toBe('https://wa.me/573144171683')
     const text = url.searchParams.get('text')
     expect(text).toContain('MINI')
     expect(text).toContain('2 x Arequipe tradicional')

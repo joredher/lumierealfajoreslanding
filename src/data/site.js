@@ -20,7 +20,7 @@ export const SIZES = [
   { id: 'mini', label: 'Mini', price: 15000, unitPrice: 4000, note: 'Tamaño pequeño, perfectos para probar' },
   { id: 'grande', label: 'Grande', price: 25000, unitPrice: 7000, note: 'Tamaño grande, el clásico' },
 ]
-export const DELIVERY_FEE = 7000 // domicilio en Yopal: un solo cargo por pedido
+export const DELIVERY_FEE = 5000 // domicilio en Yopal: un solo cargo por pedido
 export const MIN_LOOSE = 2 // mínimo de alfajores sueltos por pedido
 export const MAX_LOOSE = 24 // tope razonable; para más, escribir por WhatsApp
 export const DEFAULT_SIZE = 'grande'
@@ -48,11 +48,11 @@ export const FLAVORS = [
     ...photo('alfajor-arequipe-oreo.webp', 'Alfajor artesanal de arequipe con galleta Oreo y chocolate blanco, cortado por la mitad') },
   { id: 'redvelvet', tint: '#F0A9A9', tags: ['Bizcocho red velvet', 'Crema', 'Chocolate blanco'], name: 'Red Velvet', desc: 'Bizcocho red velvet con crema y cobertura blanca.',
     ...photo('alfajor-red-velvet.webp', 'Alfajor artesanal red velvet con crema y chocolate blanco, cortado por la mitad') },
-  { id: 'milo', tint: '#DDB48C', tags: ['Milo', 'Arequipe', 'Cobertura de chocolate'], name: 'Milo', desc: 'Sabor a Milo con arequipe y cobertura de chocolate.',
+  { id: 'milo', tint: '#DDB48C', tags: ['Milo', 'Arequipe', 'Cobertura de chocolate'], name: 'Arequipe Milo', desc: 'Sabor a Milo con arequipe y cobertura de chocolate.',
     ...photo('alfajor-milo.webp', 'Alfajor artesanal de Milo con arequipe y cobertura de chocolate', 810, 675) },
-  { id: 'nuez', tint: '#EBD3A8', tags: ['Nueces', 'Arequipe', 'Chocolate blanco'], name: 'Nuez', desc: 'Relleno de nueces con arequipe, cobertura de chocolate blanco.', isNew: true,
+  { id: 'nuez', tint: '#EBD3A8', tags: ['Nueces', 'Arequipe', 'Chocolate blanco'], name: 'Arequipe Nuez', desc: 'Relleno de nueces con arequipe, cobertura de chocolate blanco.', isNew: true,
     ...photo('alfajor-nuez.webp', 'Alfajor artesanal de nuez con arequipe y chocolate blanco', 810, 675) },
-  { id: 'nucita', tint: '#F0D9BD', tags: ['Nucita', 'Barquillo', 'Chocolate blanco'], name: 'Nucita', desc: 'Relleno cremoso de Nucita, chocolate blanco y barquillo.', isNew: true,
+  { id: 'nucita', tint: '#F0D9BD', tags: ['Nucita', 'Barquillo', 'Chocolate blanco'], name: 'Arequipe Nucita', desc: 'Relleno cremoso de Nucita, chocolate blanco y barquillo.', isNew: true,
     ...photo('alfajor-nucita.webp', 'Alfajor artesanal de Nucita con chocolate blanco y barquillo', 810, 675) },
 ]
 

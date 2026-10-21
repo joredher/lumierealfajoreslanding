@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Lumière Artesanal',
   tagline: 'Alfajores artesanales en Yopal, Casanare',
   // Set VITE_SITE_URL in .env.local (see .env.example). Used for canonical/OG/sitemap at build time.
-  url: (import.meta.env.VITE_SITE_URL || 'https://www.lumiereartesanal.com').replace(/\/$/, ''),
+  url: (import.meta.env.VITE_SITE_URL || 'https://www.lumiereartesanal.com' || 'https://xn--lumireartesanal-xmb.eocodey.com/').replace(/\/$/, ''),
   whatsapp: '573144171683',
   whatsappDisplay: '+57 314 417 1683',
   catalogUrl: 'https://wa.me/c/573144171683', // catálogo de WhatsApp Business
@@ -54,6 +54,8 @@ export const FLAVORS = [
     ...photo('alfajor-nuez.webp', 'Alfajor artesanal de nuez con arequipe y chocolate blanco', 810, 675) },
   { id: 'nucita', tint: '#F0D9BD', tags: ['Nucita', 'Barquillo', 'Chocolate blanco'], name: 'Arequipe Nucita', desc: 'Relleno cremoso de Nucita, chocolate blanco y barquillo.', isNew: true,
     ...photo('alfajor-nucita.webp', 'Alfajor artesanal de Nucita con chocolate blanco y barquillo', 810, 675) },
+  { id: 'nutella', tint: '#F0D9BD', tags: ['Nutella', 'Mani', 'Cobertura de chocolate'], name: 'Arequipe Nutella', desc: 'Relleno cremoso de Nutella, cobertura de chocolate con Mani.', isNew: true,
+    ...photo('glossy_chocolate_hazelnut_cakes.webp', 'Alfajor artesanal de Nutella con Cobertura de chocolate y Mani', 810, 675) },
 ]
 
 // Rolls de canela: se venden por catálogo de WhatsApp. TODO: agregar precios.

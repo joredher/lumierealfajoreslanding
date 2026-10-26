@@ -34,9 +34,9 @@ describe('contact data', () => {
 })
 
 describe('flavours and images (SEO)', () => {
-  it('has 9 unique flavours', () => {
-    expect(FLAVORS).toHaveLength(9)
-    expect(new Set(FLAVORS.map((f) => f.id)).size).toBe(9)
+  it('has 10 unique flavours', () => {
+    expect(FLAVORS).toHaveLength(10)
+    expect(new Set(FLAVORS.map((f) => f.id)).size).toBe(10)
   })
 
   it.each([...FLAVORS.map((f) => [f.id, f]), ['rolls', ROLLS]])('%s: file exists, <500 KB, keyword name, alt, dimensions', (_id, item) => {
@@ -57,11 +57,11 @@ describe('flavours and images (SEO)', () => {
 })
 
 describe('order pricing helpers', () => {
-  it('has the loose-alfajor rules: min 2, 4.000 mini / 7.000 big, 7.000 delivery', async () => {
+  it('has the loose-alfajor rules: min 2, 4.000 mini / 7.000 big, 5.000 delivery', async () => {
     const { MIN_LOOSE, MAX_LOOSE, DELIVERY_FEE } = await import('./site.js')
     expect(MIN_LOOSE).toBe(2)
     expect(MAX_LOOSE).toBeGreaterThanOrEqual(8)
-    expect(DELIVERY_FEE).toBe(7000)
+    expect(DELIVERY_FEE).toBe(5000)
     expect(sizeOf('mini').unitPrice).toBe(4000)
     expect(sizeOf('grande').unitPrice).toBe(7000)
   })

@@ -61,3 +61,25 @@ describe('order expiry (15 minutes)', () => {
     expect(readTs()).toBe(0)
   })
 })
+
+describe('tampered cart in localStorage', () => {
+  beforeEach(() => localStorage.clear())
+
+  it('drops items with unknown sizes, flavors or bad quantities', async () => {
+    const good = { uid: 'g', size: 'grande', flavors: { mora: 2, lulo: 2 } }
+    const bad = [
+      { uid: 'x', size: 'gigante', flavors: { mora: 4 } },
+      { uid: 'x', size: 'mini', flavors: { hack: 4 } },
+      { uid: 'x', size: 'mini', flavors: { mora: -5, lulo: 9 } },
+      { uid: 'x', size: 'mini', flavors: { mora: 1.5, lulo: 2.5 } },
+      { uid: 'x', size: 'mini', kind: 'loose', flavors: { mora: 1 } },
+      { uid: 'x', size: 'mini', kind: 'loose', flavors: { mora: 999 } },
+      { size: 'mini', flavors: { mora: 4 } },
+      null,
+    ]
+    localStorage.setItem('lumiere-cart-v2', JSON.stringify([good, ...bad]))
+    localStorage.setItem('lumiere-order-ts', String(Date.now()))
+    const { getInitialOrder } = await freshStore()
+    expect(getInitialOrder().boxes).toEqual([good])
+  })
+})

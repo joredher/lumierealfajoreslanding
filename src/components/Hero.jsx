@@ -8,12 +8,12 @@ export default function Hero({ onBuild }) {
         <p className="eyebrow">Recetas argentinas · Hechos en {SITE.city}</p>
         <h1>Alfajores artesanales hechos a mano en Yopal</h1>
         <p className="lead">
-          Preparamos alfajores con recetas argentinas, bizcocho suave y arequipe generoso. Elige entre 9 sabores y arma
+          Preparamos alfajores con recetas argentinas, bizcocho suave y arequipe generoso. Elige entre 10 sabores y arma
           tu caja de {BOX_SIZE}: {SIZES.map((s) => `${s.label.toLowerCase()}s ${formatPrice(s.price)}`).join(' o ')}.
         </p>
         <div className="hero-cta">
           <button className="btn" onClick={onBuild}>Arma tu caja de alfajores</button>
-          <a className="btn btn-ghost" href="#sabores">Ver los 9 sabores</a>
+          <a className="btn btn-ghost" href="#sabores">Ver los 10 sabores</a>
         </div>
       </div>
       <div className="hero-art">

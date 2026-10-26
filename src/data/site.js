@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Lumière Artesanal',
   tagline: 'Alfajores artesanales en Yopal, Casanare',
   // Set VITE_SITE_URL in .env.local (see .env.example). Used for canonical/OG/sitemap at build time.
-  url: (import.meta.env.VITE_SITE_URL || 'https://www.lumiereartesanal.com' || 'https://xn--lumireartesanal-xmb.eocodey.com/').replace(/\/$/, ''),
+  url: (import.meta.env.VITE_SITE_URL || 'https://xn--lumireartesanal-xmb.eocodey.com').replace(/\/$/, ''),
   whatsapp: '573144171683',
   whatsappDisplay: '+57 314 417 1683',
   catalogUrl: 'https://wa.me/c/573144171683', // catálogo de WhatsApp Business
@@ -49,13 +49,13 @@ export const FLAVORS = [
   { id: 'redvelvet', tint: '#F0A9A9', tags: ['Bizcocho red velvet', 'Crema', 'Chocolate blanco'], name: 'Red Velvet', desc: 'Bizcocho red velvet con crema y cobertura blanca.',
     ...photo('alfajor-red-velvet.webp', 'Alfajor artesanal red velvet con crema y chocolate blanco, cortado por la mitad') },
   { id: 'milo', tint: '#DDB48C', tags: ['Milo', 'Arequipe', 'Cobertura de chocolate'], name: 'Arequipe Milo', desc: 'Sabor a Milo con arequipe y cobertura de chocolate.',
-    ...photo('alfajor-milo.webp', 'Alfajor artesanal de Milo con arequipe y cobertura de chocolate', 810, 675) },
+    ...photo('alfajor-milo.webp', 'Alfajor artesanal de Milo con arequipe y cobertura de chocolate', 810, 608) },
   { id: 'nuez', tint: '#EBD3A8', tags: ['Nueces', 'Arequipe', 'Chocolate blanco'], name: 'Arequipe Nuez', desc: 'Relleno de nueces con arequipe, cobertura de chocolate blanco.', isNew: true,
-    ...photo('alfajor-nuez.webp', 'Alfajor artesanal de nuez con arequipe y chocolate blanco', 810, 675) },
+    ...photo('alfajor-nuez.webp', 'Alfajor artesanal de nuez con arequipe y chocolate blanco', 810, 608) },
   { id: 'nucita', tint: '#F0D9BD', tags: ['Nucita', 'Barquillo', 'Chocolate blanco'], name: 'Arequipe Nucita', desc: 'Relleno cremoso de Nucita, chocolate blanco y barquillo.', isNew: true,
-    ...photo('alfajor-nucita.webp', 'Alfajor artesanal de Nucita con chocolate blanco y barquillo', 810, 675) },
+    ...photo('alfajor-nucita.webp', 'Alfajor artesanal de Nucita con chocolate blanco y barquillo', 810, 608) },
   { id: 'nutella', tint: '#F0D9BD', tags: ['Nutella', 'Mani', 'Cobertura de chocolate'], name: 'Arequipe Nutella', desc: 'Relleno cremoso de Nutella, cobertura de chocolate con Mani.', isNew: true,
-    ...photo('glossy_chocolate_hazelnut_cakes.webp', 'Alfajor artesanal de Nutella con Cobertura de chocolate y Mani', 810, 675) },
+    ...photo('alfajor-nutella.webp', 'Alfajor artesanal de Nutella con Cobertura de chocolate y Mani', 810, 608) },
 ]
 
 // Rolls de canela: se venden por catálogo de WhatsApp. TODO: agregar precios.
